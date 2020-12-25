@@ -1,5 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="java.util.Collection" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
@@ -12,19 +11,23 @@
 </head>
 <body>
 <div class="container">
+    <h2 class="text-center">Accidents</h2>
     <table class="table">
         <thead class="thead-light">
         <tr>
             <th>#</th>
-            <th>First Name</th>
+            <th>Name</th>
+            <th>Text</th>
+            <th>Address</th>
         </tr>
         </thead>
         <tbody>
-        <c:set var="id" scope="session" value="0"/>
-        <c:forEach items="${list}" var="item">
+        <c:forEach items="${accidents}" var="item" varStatus="counter">
             <tr>
-                <th scope="row">${id = id + 1}</th>
-                <td>${item}</td>
+                <th scope="row">${counter.count}</th>
+                <td>${item.value.name}</td>
+                <td>${item.value.text}</td>
+                <td>${item.value.address}</td>
             </tr>
         </c:forEach>
         </tbody>
