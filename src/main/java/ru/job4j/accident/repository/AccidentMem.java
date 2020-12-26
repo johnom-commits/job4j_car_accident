@@ -5,6 +5,7 @@ import ru.job4j.accident.model.Accident;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Repository
@@ -12,9 +13,9 @@ public class AccidentMem {
     private final Map<Integer, Accident> accidents = new ConcurrentHashMap<>();
 
     public AccidentMem() {
-        accidents.put(1, Accident.of("name1", "text1", "address1"));
-        accidents.put(2, Accident.of("name2", "text2", "address2"));
-        accidents.put(3, Accident.of("name3", "text3", "address3"));
+        accidents.put(1, Accident.of(1, "name1", "text1", "address1"));
+        accidents.put(2, Accident.of(2, "name2", "text2", "address2"));
+        accidents.put(3, Accident.of(3, "name3", "text3", "address3"));
     }
 
     public Collection<Accident> getAccidents() {
@@ -23,5 +24,9 @@ public class AccidentMem {
 
     public void create(Accident accident) {
         accidents.put(accidents.size() + 1, accident);
+    }
+
+    public Optional<Map.Entry<Integer, Accident>> findById(int id) {
+         return accidents.entrySet().stream().filter(entry -> id == entry.getValue().getId()).findFirst();
     }
 }

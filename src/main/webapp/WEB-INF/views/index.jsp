@@ -26,7 +26,7 @@
         <c:forEach items="${accidents}" var="item" varStatus="counter">
             <tr>
                 <th scope="row">${counter.count}</th>
-                <td>${item.name}</td>
+                <td><a href="<c:url value='/update?id=${item.id}'/>">${item.name}</a></td>
                 <td>${item.text}</td>
                 <td>${item.address}</td>
             </tr>
