@@ -25,9 +25,9 @@
         <c:forEach items="${accidents}" var="item" varStatus="counter">
             <tr>
                 <th scope="row">${counter.count}</th>
-                <td>${item.value.name}</td>
-                <td>${item.value.text}</td>
-                <td>${item.value.address}</td>
+                <td>${item.name}</td>
+                <td>${item.text}</td>
+                <td>${item.address}</td>
             </tr>
         </c:forEach>
         </tbody>
