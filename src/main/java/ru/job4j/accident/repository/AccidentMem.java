@@ -11,6 +11,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Repository
 public class AccidentMem {
     private final Map<Integer, Accident> accidents = new ConcurrentHashMap<>();
+    private final AtomicInteger atomInt = new AtomicInteger();
 
     public AccidentMem() {
         accidents.put(1, Accident.of("name1", "text1", "address1"));
@@ -23,7 +24,7 @@ public class AccidentMem {
     }
 
     public void create(Accident accident) {
-        var atomInt = new AtomicInteger(accidents.size());
+        atomInt.set(accidents.size());
         accidents.put(atomInt.incrementAndGet(), accident);
     }
 }
