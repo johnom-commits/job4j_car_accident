@@ -6,6 +6,7 @@ import ru.job4j.accident.model.Accident;
 import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Repository
 public class AccidentMem {
@@ -22,6 +23,7 @@ public class AccidentMem {
     }
 
     public void create(Accident accident) {
-        accidents.put(accidents.size() + 1, accident);
+        var atomInt = new AtomicInteger(accidents.size());
+        accidents.put(atomInt.incrementAndGet(), accident);
     }
 }
