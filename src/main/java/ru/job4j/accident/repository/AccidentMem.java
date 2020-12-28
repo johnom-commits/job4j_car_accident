@@ -26,7 +26,14 @@ public class AccidentMem {
         accidents.put(accidents.size() + 1, accident);
     }
 
-    public Optional<Map.Entry<Integer, Accident>> findById(int id) {
-         return accidents.entrySet().stream().filter(entry -> id == entry.getValue().getId()).findFirst();
+    public Accident findById(int id) {
+        Accident accident = null;
+        Optional<Map.Entry<Integer, Accident>> optionalEntry = accidents.entrySet().stream()
+                .filter(entry -> id == entry.getValue().getId())
+                .findFirst();
+        if (optionalEntry.isPresent()) {
+            accident = optionalEntry.get().getValue();
+        }
+        return accident;
     }
 }

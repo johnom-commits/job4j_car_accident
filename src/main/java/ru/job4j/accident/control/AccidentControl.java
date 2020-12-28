@@ -27,9 +27,13 @@ public class AccidentControl {
 
     @GetMapping("/update")
     public String update(@RequestParam("id") int id, Model model) {
-        Optional<Map.Entry<Integer, Accident>> map = accidents.findById(id);
-        map.ifPresent(entry -> model.addAttribute("accident", entry.getValue()));
-        return "accident/update";
+        Accident accident = accidents.findById(id);
+        if (accident != null) {
+            model.addAttribute("accident", accident);
+            return "accident/update";
+        } else {
+            return "redirect:/";
+        }
     }
 
     @PostMapping("/save")
