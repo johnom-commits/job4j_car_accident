@@ -8,28 +8,28 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.job4j.accident.model.Accident;
 import ru.job4j.accident.repository.AccidentMem;
+import ru.job4j.accident.service.AccidentService;
 
 import java.util.Map;
 import java.util.Optional;
 
 @Controller
 public class AccidentControl {
-    private final AccidentMem accidents;
+    private final AccidentService accidents;
 
-    public AccidentControl(AccidentMem accidents) {
+    public AccidentControl(AccidentService accidents) {
         this.accidents = accidents;
     }
 
     @GetMapping("/create")
     public String create(Model model) {
-        model.addAttribute("types", accidents.getTypes());
+        model.addAttribute("types", accidents.types());
         return "accident/create";
     }
 
     @GetMapping("/update")
     public String update(@RequestParam("id") int id, Model model) {
-        Optional<Map.Entry<Integer, Accident>> map = accidents.findById(id);
-        map.ifPresent(entry -> model.addAttribute("accident", entry.getValue()));
+        model.addAttribute("accident", accidents.findById(id));
         return "accident/update";
     }
 

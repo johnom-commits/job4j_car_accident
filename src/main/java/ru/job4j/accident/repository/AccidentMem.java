@@ -6,10 +6,12 @@ import ru.job4j.accident.model.AccidentType;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Repository
 public class AccidentMem {
     private final Map<Integer, Accident> accidents = new ConcurrentHashMap<>();
+    private final AtomicInteger atomInt = new AtomicInteger();
     private final List<AccidentType> types = new ArrayList<>();
 
     public AccidentMem() {
@@ -26,14 +28,19 @@ public class AccidentMem {
     }
 
     public void create(Accident accident) {
-        accidents.put(accidents.size() + 1, accident);
+        atomInt.set(accidents.size());
+        accidents.put(atomInt.incrementAndGet(), accident);
     }
 
-    public Optional<Map.Entry<Integer, Accident>> findById(int id) {
-         return accidents.entrySet().stream().filter(entry -> id == entry.getValue().getId()).findFirst();
+    public Accident findById(int id) {
+        return accidents.get(id);
     }
 
     public List<AccidentType> getTypes() {
         return types;
+    }
+
+    public AccidentType getAccidentTypeById(int id) {
+        return types.get(id);
     }
 }
