@@ -8,7 +8,6 @@ import ru.job4j.accident.service.AccidentService;
 
 @Controller
 public class IndexControl {
-
     private AccidentService service;
 
     @Autowired
@@ -18,7 +17,7 @@ public class IndexControl {
 
     @GetMapping("/")
     public String index(final Model model) {
-        model.addAttribute("accidents", service.accidents());
+        model.addAttribute("accidents", new AccidentService().accidents());
         return "index";
     }
 }

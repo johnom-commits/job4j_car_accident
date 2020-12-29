@@ -14,9 +14,9 @@ public class AccidentMem {
     private final AtomicInteger atomInt = new AtomicInteger();
 
     public AccidentMem() {
-        accidents.put(1, Accident.of("name1", "text1", "address1"));
-        accidents.put(2, Accident.of("name2", "text2", "address2"));
-        accidents.put(3, Accident.of("name3", "text3", "address3"));
+        accidents.put(1, Accident.of(1, "name1", "text1", "address1"));
+        accidents.put(2, Accident.of(2, "name2", "text2", "address2"));
+        accidents.put(3, Accident.of(3, "name3", "text3", "address3"));
     }
 
     public Collection<Accident> getAccidents() {
@@ -26,5 +26,9 @@ public class AccidentMem {
     public void create(Accident accident) {
         atomInt.set(accidents.size());
         accidents.put(atomInt.incrementAndGet(), accident);
+    }
+
+    public Accident findById(int id) {
+        return accidents.get(id);
     }
 }
