@@ -8,15 +8,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.job4j.accident.model.Accident;
 import ru.job4j.accident.repository.AccidentMem;
+import ru.job4j.accident.service.AccidentService;
 
 import java.util.Map;
 import java.util.Optional;
 
 @Controller
 public class AccidentControl {
-    private final AccidentMem accidents;
+    private final AccidentService accidents;
 
-    public AccidentControl(AccidentMem accidents) {
+    public AccidentControl(AccidentService accidents) {
         this.accidents = accidents;
     }
 
@@ -27,13 +28,8 @@ public class AccidentControl {
 
     @GetMapping("/update")
     public String update(@RequestParam("id") int id, Model model) {
-        Accident accident = accidents.findById(id);
-        if (accident != null) {
-            model.addAttribute("accident", accident);
-            return "accident/update";
-        } else {
-            return "redirect:/";
-        }
+        model.addAttribute("accident", accidents.findById(id));
+        return "accident/update";
     }
 
     @PostMapping("/save")

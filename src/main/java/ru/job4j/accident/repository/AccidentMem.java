@@ -5,12 +5,13 @@ import ru.job4j.accident.model.Accident;
 
 import java.util.Collection;
 import java.util.Map;
-import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Repository
 public class AccidentMem {
     private final Map<Integer, Accident> accidents = new ConcurrentHashMap<>();
+    private final AtomicInteger atomInt = new AtomicInteger();
 
     public AccidentMem() {
         accidents.put(1, Accident.of(1, "name1", "text1", "address1"));
@@ -23,17 +24,11 @@ public class AccidentMem {
     }
 
     public void create(Accident accident) {
-        accidents.put(accidents.size() + 1, accident);
+        atomInt.set(accidents.size());
+        accidents.put(atomInt.incrementAndGet(), accident);
     }
 
     public Accident findById(int id) {
-        Accident accident = null;
-        Optional<Map.Entry<Integer, Accident>> optionalEntry = accidents.entrySet().stream()
-                .filter(entry -> id == entry.getValue().getId())
-                .findFirst();
-        if (optionalEntry.isPresent()) {
-            accident = optionalEntry.get().getValue();
-        }
-        return accident;
+        return accidents.get(id);
     }
 }
