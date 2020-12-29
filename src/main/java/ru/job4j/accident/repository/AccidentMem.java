@@ -4,19 +4,21 @@ import org.springframework.stereotype.Repository;
 import ru.job4j.accident.model.Accident;
 import ru.job4j.accident.model.AccidentType;
 
-import java.util.Collection;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Repository
 public class AccidentMem {
     private final Map<Integer, Accident> accidents = new ConcurrentHashMap<>();
+    private final List<AccidentType> types = new ArrayList<>();
 
     public AccidentMem() {
         accidents.put(1, Accident.of(1, "name1", "text1", "address1", AccidentType.of(1, "Две машины")));
         accidents.put(2, Accident.of(2, "name2", "text2", "address2", AccidentType.of(1, "Две машины")));
         accidents.put(3, Accident.of(3, "name3", "text3", "address3", AccidentType.of(1, "Две машины")));
+        types.add(AccidentType.of(1, "Две машины"));
+        types.add(AccidentType.of(2, "Машина и человек"));
+        types.add(AccidentType.of(3, "Машина и велосипед"));
     }
 
     public Collection<Accident> getAccidents() {
@@ -29,5 +31,9 @@ public class AccidentMem {
 
     public Optional<Map.Entry<Integer, Accident>> findById(int id) {
          return accidents.entrySet().stream().filter(entry -> id == entry.getValue().getId()).findFirst();
+    }
+
+    public List<AccidentType> getTypes() {
+        return types;
     }
 }
