@@ -28,21 +28,20 @@ public class AccidentService {
         return store.findById(id);
     }
 
-    public void create(Accident accident) {
+    public void create(Accident accident, String[] ids) {
         AccidentType type = store.getAccidentTypeById(accident.getType().getId());
         accident.setType(type);
 
-        int[] array = getIntArrayRules(accident.getRIds());
+        int[] array = getIntArrayRules(ids);
         accident.setRules(store.getRules(array));
 
         store.create(accident);
     }
 
-    private int[] getIntArrayRules(String rIds) {
-        String[] stArray = rIds.split(",");
-        int[] array = new int[stArray.length];
+    private int[] getIntArrayRules(String[] rIds) {
+        int[] array = new int[rIds.length];
         for (int j = 0; j < array.length; j++) {
-            array[j] = Integer.parseInt(stArray[j]);
+            array[j] = Integer.parseInt(rIds[j]);
         }
         return array;
     }
