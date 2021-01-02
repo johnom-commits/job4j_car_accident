@@ -14,7 +14,6 @@ public class Accident {
     private String address;
     private AccidentType type;
     private Set<Rule> rules;
-    private String rIds;
 
     public static Accident of(int id, String name, String text, String address, AccidentType type, Set<Rule> rules) {
         Accident accident = new Accident();
