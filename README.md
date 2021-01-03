@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/johnom-commits/job4j_car_accident.svg?branch=build_war)](https://travis-ci.org/johnom-commits/job4j_car_accident)
 # job4j_car_accident
 
 В блоке Spring мы будем разрабатывать проект - Автонарушители.
