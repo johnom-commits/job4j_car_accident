@@ -2,11 +2,19 @@ package ru.job4j.accident.model;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter @Setter @EqualsAndHashCode
+import javax.persistence.*;
+
+@Entity
+@Table(name = "rules")
+@Getter @Setter @EqualsAndHashCode @NoArgsConstructor
 public class Rule {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(unique = true, nullable = false, length = 500)
     private String name;
 
     public static Rule of(int id, String name) {
