@@ -22,15 +22,15 @@ public class AccidentJdbcTemplate {
     }
 
     public List<Accident> getAccidents() {
-        return jdbc.query("SELECT id, name, text, address, type_id FROM accidents",
+        return jdbc.query("SELECT a.id AS aid, a.name AS a_name, text, address, type_id, t.name AS t_name FROM accidents AS a JOIN accident_type AS t ON a.type_id = t.id",
                 (rs, row) -> {
                     Accident accident = new Accident();
-                    int id = rs.getInt("id");
+                    int id = rs.getInt("aid");
                     accident.setId(id);
-                    accident.setName(rs.getString("name"));
+                    accident.setName(rs.getString("a_name"));
                     accident.setText(rs.getString("text"));
                     accident.setAddress(rs.getString("address"));
-                    accident.setType(getAccidentTypeById(rs.getInt("type_id")));
+                    accident.setType(AccidentType.of(rs.getInt("type_id"), rs.getString("t_name")));
                     accident.setRules(getRulesOfAccidentId(id));
                     return accident;
                 });
@@ -57,14 +57,14 @@ public class AccidentJdbcTemplate {
     }
 
     public Accident findById(int id) {
-        return jdbc.queryForObject("SELECT id, name, text, address, type_id FROM accidents WHERE id = ?",
+        return jdbc.queryForObject("SELECT a.id AS aid, a.name AS a_name, text, address, type_id, t.name AS t_name FROM accidents AS a JOIN accident_type AS t ON a.type_id = t.id WHERE a.id = ?",
                 (rs, rowNum) -> {
                     Accident accident = new Accident();
-                    accident.setId(rs.getInt("id"));
-                    accident.setName(rs.getString("name"));
+                    accident.setId(rs.getInt("aid"));
+                    accident.setName(rs.getString("a_name"));
                     accident.setAddress(rs.getString("address"));
                     accident.setText(rs.getString("text"));
-                    accident.setType(getAccidentTypeById(rs.getInt("type_id")));
+                    accident.setType(AccidentType.of(rs.getInt("type_id"), rs.getString("t_name")));
                     accident.setRules(getRulesOfAccidentId(id));
                     return accident;
                 }, id);
