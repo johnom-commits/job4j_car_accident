@@ -5,25 +5,26 @@ import org.springframework.stereotype.Service;
 import ru.job4j.accident.model.Accident;
 import ru.job4j.accident.model.AccidentType;
 import ru.job4j.accident.model.Rule;
-import ru.job4j.accident.repository.AccidentHibernate;
-import ru.job4j.accident.repository.AccidentJdbcTemplate;
+import ru.job4j.accident.repository.*;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class AccidentService {
 
-    private AccidentHibernate store;
+    private AccidentRepository store;
+    private AccidentTypeRepository accidentType;
+    private RuleRepository rule;
 
     @Autowired
-    public AccidentService(AccidentHibernate store) {
+    public AccidentService(AccidentRepository store, AccidentTypeRepository accidentType, RuleRepository rule) {
         this.store = store;
+        this.accidentType = accidentType;
+        this.rule = rule;
     }
 
     public Collection<Accident> accidents() {
-        return store.getAccidents();
+        return store.findAll();
     }
 
     public Accident findById(int id) {
@@ -31,13 +32,15 @@ public class AccidentService {
     }
 
     public void create(Accident accident, String[] ids) {
-        AccidentType type = store.getAccidentTypeById(accident.getType().getId());
+        int id = accident.getType().getId();
+        AccidentType type = accidentType.findById(id).get();
         accident.setType(type);
 
         List<Integer> rules = getIntListRules(ids);
-        accident.setRules(store.getRules(rules));
+        List<Rule> list = (List<Rule>) rule.findAllById(rules);
+        accident.setRules(new HashSet<>(list));
 
-        store.create(accident);
+        store.save(accident);
     }
 
     private List<Integer> getIntListRules(String[] rIds) {
@@ -49,10 +52,10 @@ public class AccidentService {
     }
 
     public List<AccidentType> types() {
-        return store.getTypes();
+        return (List<AccidentType>) accidentType.findAll();
     }
 
     public List<Rule> rules() {
-        return store.getRules();
+        return (List<Rule>) rule.findAll();
     }
 }

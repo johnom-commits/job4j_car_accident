@@ -24,7 +24,7 @@ public class Accident {
     @ManyToOne
     @JoinColumn(name = "type_id")
     private AccidentType type;
-    @ManyToMany(cascade = CascadeType.PERSIST)
+    @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(name = "accidents_rules", joinColumns = {
             @JoinColumn(name = "acc_id", nullable = false, foreignKey = @ForeignKey(name = "ACCIDENT_ID_FK"))},
             inverseJoinColumns = {@JoinColumn(name = "rule_id",
