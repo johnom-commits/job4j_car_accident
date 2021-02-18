@@ -2,12 +2,17 @@ package ru.job4j.accident.model;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Setter @Getter @EqualsAndHashCode
+@Setter @Getter @EqualsAndHashCode @NoArgsConstructor
 public class AccidentType {
     private int id;
     private String name;
+
+    public AccidentType(int id) {
+        this.id = id;
+    }
 
     public static AccidentType of(int id, String name) {
         AccidentType type = new AccidentType();
