@@ -43,13 +43,13 @@ public class AccidentHibernate {
 
     public Collection<Accident> getAccidents() {
         return tx(session -> session
-                .createQuery("select a from Accident as a", Accident.class)
+                .createQuery("select a from Accident as a join fetch a.rules", Accident.class)
                 .list());
     }
 
     public Accident findById(int id) {
         return tx(session -> session
-                .createQuery("select a from Accident as a where a.id = :id", Accident.class)
+                .createQuery("select a from Accident as a join fetch a.rules where a.id = :id", Accident.class)
                 .setParameter("id", id)
                 .getSingleResult());
     }
