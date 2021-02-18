@@ -11,6 +11,9 @@
 </head>
 <body>
 <div class="container">
+    <div>
+        Login as : ${user.username}
+    </div>
     <h2 class="text-center">Accidents</h2>
     <a href="<c:url value='/create'/>">Добавить инцидент</a><br>
     <table class="table">
