@@ -1,17 +1,38 @@
 [![Build Status](https://travis-ci.org/johnom-commits/job4j_car_accident.svg?branch=build_war)](https://travis-ci.org/johnom-commits/job4j_car_accident)
-# job4j_car_accident
+## job4j_car_accident
 
-В блоке Spring мы будем разрабатывать проект - Автонарушители.
+### Описание
+Площадка для фиксации автомобильных правонарушений. Позволяет пользователям фиксировать ДТП. Правонарушения сохраняются в БД.
 
-В системе существуют две роли. Обычные пользователи и автоинспекторы.
+### Технологии
+- Java
+    - Spring Security
+    - Spring MVC
+    - Spring Data
+    - Java 12
+- Hibernate
+- PostgreSQL 10
+- JSP
+- JSTL
+- Apache maven
+- IntelliJ IDEA
 
-Пользователь добавляет описание автонарушение. 
+### Функциональность
+#### Регистрация на форуме.
 
-В заявлении указывает: адрес, номер машины, описание нарушения и фотографию нарушения.
+![reg](images/SignUp.png)
 
-У заявки есть статус. Принята. Отклонена. Завершена.
+#### Авторизация для входа
+![login](images/SignIn.png)
 
-Вид системы. Главная страница - это поиск с таблицей.
+#### Создание новой темы.
 
-Под этот проект создайте новый репозиторий job4j_car_accident
+![new_topic](images/NewItem.png)
 
+#### Главная страница по списком всех тем.
+
+![index](images/accidents.png)
+
+#### Схема базы данных
+
+![Schema](images/SchemeDB.png)

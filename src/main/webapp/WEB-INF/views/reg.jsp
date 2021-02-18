@@ -3,6 +3,7 @@
 <html>
 <body>
 <form name='login' action="<c:url value='/reg'/>" method='POST'>
+    <h3>Sign up</h3>
     <table>
         <tr>
             <td>UserName:</td>
@@ -12,10 +13,9 @@
             <td>Password:</td>
             <td><input type='password' name='password'/></td>
         </tr>
-        <tr>
-            <td colspan='2'><input name="submit" type="submit" value="submit" /></td>
-        </tr>
     </table>
+    <p></p>
+    <input name="submit" type="submit" value="Confirm" />
 </form>
 </body>
 </html>
